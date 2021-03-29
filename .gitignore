@@ -11,3 +11,6 @@
 # .tflock files
 *.lock.hcl
 *.lock.*
+
+# .tflock files
+*.DS_Store
