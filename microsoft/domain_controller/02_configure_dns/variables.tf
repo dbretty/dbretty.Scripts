@@ -2,8 +2,12 @@
 #   Variables
 #################################################################
 
-variable "configure_dns_forwarder" {
-  description = "The name of the Active Directory domain, for example `consoto.local`"
+variable "dns_forwarder" {
+  description = "The IP Address for the DNS Forwarder"
+}
+
+variable "reverse_lookups" {
+  description = "A comma delimited list of Reverso Lookup Zones '192.168.1.0/24,192.168.2.0/24'"
 }
 
 variable "admin_username" {

@@ -24,5 +24,5 @@ resource "null_resource" "domain_controller" {
     inline = [
       "powershell -Command \"${local.powershell_command}\"",
     ]
-}
+  }
 }
