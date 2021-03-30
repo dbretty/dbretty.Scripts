@@ -1,12 +1,22 @@
 <#
 .SYNOPSIS
-    Install and configure the base settings of a DHCP Server
+    Install and configure a DHCP Scope on the DHCP Server
 .DESCRIPTION
-    Install and configure the base settings of a DHCP Server
+    Install and configure a DHCP Scope on the DHCP Server
 .PARAMETER dns_server
     The DNS Server you want to assign to the Server
 .PARAMETER gateway
     The Gateway you want to assign to the Server
+.PARAMETER scope_name
+    The name you want to use for the DHCP Scope
+.PARAMETER scope_network
+    The overall Network for the DHCP Scope '192.168.10.0'
+.PARAMETER start_address
+    The Start Address for the DHCP Scope '192.168.10.100'
+.PARAMETER end_address
+    The End Address for the DHCP Scope '192.168.10.200'
+.PARAMETER subnet_mask
+    The Subnet Mask for the DHCP Scope '255.255.255.0'
 .OUTPUTS
     Log File stored in C:\Windows\Temp
 .NOTES
@@ -16,7 +26,7 @@
   Purpose/Change: Initial script development
   
 .EXAMPLE
-  ./configure_dhcp.ps1 -dns_server 192.168.10.10 -gateway 192.168.10.1
+  ./configure_dhcp_scope.ps1 -dns_server 192.168.10.10 -gateway 192.168.10.1 -scope_name vlan_10 -scope_network 192.168.10.0 -start_address 192.168.10.100 -end_address 192.168.10.200 -subnet_mask 255.255.255.0
 #>
 
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
@@ -35,7 +45,7 @@ $sScriptVersion = "1.0"
 
 # Log File Info
 $sLogPath = "C:\Windows\Temp"
-$sLogName = "configure_dhcp.log"
+$sLogName = "configure_dhcp_scope.log"
 $sLogFile = Join-Path -Path $sLogPath -ChildPath $sLogName
 Write-Host "Setting Log File to $sLogFile"
 
@@ -48,14 +58,24 @@ Start-Transcript $sLogFile
 Write-Host "Started Transcript"
 
 #----------------------------------------------------------[Parameters]------------------------------------------------------------
-
 Param
 (
-    [parameter(ValueFromPipeline = $true)][String[]]$dns_server,
-    [parameter(ValueFromPipeline = $true)][String[]]$gateway
+    [parameter(ValueFromPipeline = $true)]$dns_server,
+    [parameter(ValueFromPipeline = $true)]$gateway,
+    [parameter(ValueFromPipeline = $true)]$scope_name,
+    [parameter(ValueFromPipeline = $true)]$scope_network,
+    [parameter(ValueFromPipeline = $true)]$start_address,
+    [parameter(ValueFromPipeline = $true)]$end_address,
+    [parameter(ValueFromPipeline = $true)]$subnet_mask
 )
 
 #-----------------------------------------------------------[Script]----------------------------------------------------------------
+
+Import-Module DHCPServer
+$DNSName = $ENV:computername + "." + $ENV:userdnsdomain
+
+Add-DHCPServerv4Scope -EndRange $EndAddress -Name $ScopeName -StartRange $StartAddress -SubnetMask $SubnetMask -State Active -ComputerName $ENV:computername
+Set-DHCPServerv4OptionValue -ComputerName $DNSName -ScopeId $ScopeNetwork -DnsServer $DNSServer -DnsDomain $ENV:userdnsdomain -Router $Gateway
 
 if($dns_server -eq ""){
     Write-Host "You have to enter a DNS Server to continue"
@@ -109,3 +129,5 @@ $EndDTM = (Get-Date)
 Write-Host "Elapsed Time: $(($EndDTM-$StartDTM).TotalSeconds) Seconds"
 Write-Host "Elapsed Time: $(($EndDTM-$StartDTM).TotalMinutes) Minutes"
 Stop-Transcript
+
+
