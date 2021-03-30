@@ -23,7 +23,7 @@
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
 
 # Set the start Date and Time
-Write-Verbose "Setting Script Parameters"
+Write-Host "Setting Script Parameters"
 $StartDTM = (Get-Date)
 
 # Set Error Action to Silently Continue
@@ -38,7 +38,7 @@ $sScriptVersion = "1.0"
 $sLogPath = "C:\Windows\Temp"
 $sLogName = "configure_dhcp.log"
 $sLogFile = Join-Path -Path $sLogPath -ChildPath $sLogName
-Write-Verbose "Setting Log File to $sLogFile"
+Write-Host "Setting Log File to $sLogFile"
 
 # Server Name and IP Info
 $DNSName = $ENV:computername + "." + $ENV:userdnsdomain
@@ -46,7 +46,7 @@ $ServerIP = Get-NetIPAddress -AddressFamily IPv4 | Where-Object {$_.IPAddress -n
 
 # Start the transcript for the script
 Start-Transcript $sLogFile
-Write-Verbose "Started Transcript"
+Write-Host "Started Transcript"
 
 #----------------------------------------------------------[Parameters]------------------------------------------------------------
 
@@ -59,28 +59,28 @@ Param
 #-----------------------------------------------------------[Script]----------------------------------------------------------------
 
 if($null -eq $dns_server){
-    Write-Verbose "You have to eter a DNS Server to continue"
+    Write-Host "You have to eter a DNS Server to continue"
 } else {
     if($null -eq $gateway){
-        Write-Verbose "You have to eter a Gateway Server to continue"
+        Write-Host "You have to eter a Gateway Server to continue"
     } else {
-        Write-Verbose "Parameters verified, runnning DHCP Configuration"
+        Write-Host "Parameters verified, runnning DHCP Configuration"
         # Check for the status of the DHCP Installation
         $Status = Get-WindowsFeature -Name DHCP
 
         if($Status.installed -eq $True){
             # DHCP is already installed
-            Write-Verbose "DHCP Server is already installed"
+            Write-Host "DHCP Server is already installed"
             $DHCPInstalled = $True
         } else {
             # DHCP is not installed, install it now
-            Write-Verbose "DHCP Server not installed, installing now"
+            Write-Host "DHCP Server not installed, installing now"
             $Result = Add-WindowsFeature -Name DHCP
             if($result.success -eq $True){
-                Write-Verbose "DHCP Server installed"
+                Write-Host "DHCP Server installed"
                 $DHCPInstalled = $True
             } else {
-                Write-Verbose "DHCP Server install failed"
+                Write-Host "DHCP Server install failed"
                 $DHCPInstalled = $False
             }
         }
@@ -88,16 +88,16 @@ if($null -eq $dns_server){
         # Validate DHCP was installed successfully
         if($DHCPInstalled -eq $true){
             # Import DHCP Management Snappin
-            Write-Verbose "Import DHCP Server Snappin"
+            Write-Host "Import DHCP Server Snappin"
             Import-Module DHCPServer
 
-            Write-Verbose "Authorising DHCP Server in Domain"
+            Write-Host "Authorising DHCP Server in Domain"
             Add-DhcpServerInDC -DnsName $DNSName -IPAddress $ServerIP.IPAddress
 
-            Write-Verbose "Setting DHCP Server options"
+            Write-Host "Setting DHCP Server options"
             Set-DHCPServerv4OptionValue -ComputerName $DNSName -DnsServer $DNSServer -DnsDomain $ENV:userdnsdomain -Router $Gateway
         } else {
-            Write-Verbose "There was a problem installing the DHCP server, please check the logs for more information"
+            Write-Host "There was a problem installing the DHCP server, please check the logs for more information"
         }
     }
 }
@@ -105,8 +105,8 @@ if($null -eq $dns_server){
 
 #-----------------------------------------------------------[Clean]----------------------------------------------------------------
 # Stop Logging
-Write-Verbose "Stop logging"
+Write-Host "Stop logging"
 $EndDTM = (Get-Date)
-Write-Verbose "Elapsed Time: $(($EndDTM-$StartDTM).TotalSeconds) Seconds"
-Write-Verbose "Elapsed Time: $(($EndDTM-$StartDTM).TotalMinutes) Minutes"
+Write-Host "Elapsed Time: $(($EndDTM-$StartDTM).TotalSeconds) Seconds"
+Write-Host "Elapsed Time: $(($EndDTM-$StartDTM).TotalMinutes) Minutes"
 Stop-Transcript
