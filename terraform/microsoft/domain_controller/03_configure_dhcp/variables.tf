@@ -3,11 +3,11 @@
 #################################################################
 
 variable "dns_server" {
-  description = "The name of the Active Directory domain, for example `consoto.local`"
+  description = "The DNS Server to use for the Server DHCP Options"
 }
 
 variable "gateway" {
-  description = "The name of the Active Directory domain, for example `consoto.local`"
+  description = "The Gateway Server to use for the Server DHCP Options"
 }
 
 variable "admin_username" {
@@ -19,5 +19,5 @@ variable "admin_password" {
 }
 
 variable "host_name" {
-  description = "The hostname for the virtual machine"
+  description = "The hostname for the server"
 }
