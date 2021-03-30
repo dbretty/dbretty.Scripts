@@ -20,7 +20,7 @@ resource "null_resource" "configure_dhcp" {
     }
     inline = [
       "powershell -Command \"Invoke-WebRequest -Uri ${local.script_file} -OutFile ${local.out_file}\"",
-      "powershell -File ${local.out_file} -DNSServer ${var.dns_server} -Gateway ${var.gateway} -Verbose",
+      "powershell -File ${local.out_file} -dns_server ${var.dns_server} -gateway ${var.gateway}",
       "powershell -Command \"Remove-Item -Path ${local.out_file} -Force\"",
     ]
   }

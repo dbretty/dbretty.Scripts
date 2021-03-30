@@ -57,10 +57,10 @@ Param
 
 #-----------------------------------------------------------[Script]----------------------------------------------------------------
 
-if($null -eq $dns_server){
+if($dns_server -eq ""){
     Write-Host "You have to eter a DNS Server to continue"
 } else {
-    if($null -eq $gateway){
+    if($gateway -eq ""){
         Write-Host "You have to eter a Gateway Server to continue"
     } else {
         Write-Host "Parameters verified, runnning DHCP Configuration"
