@@ -47,8 +47,8 @@ Write-Host "Started Transcript"
 
 Param
 (
-    [parameter(ValueFromPipeline = $true,Mandatory=$True,HelpMessage="The root OU you want to build your structure from")]$root_ou,
-    [parameter(ValueFromPipeline = $true,Mandatory=$True,HelpMessage="The lab name for your deployment")]$lab_name
+    [parameter(ValueFromPipeline = $true,Mandatory=$True)]$root_ou,
+    [parameter(ValueFromPipeline = $true,Mandatory=$True)]$lab_name
 )
 
 #-----------------------------------------------------------[Script]----------------------------------------------------------------
