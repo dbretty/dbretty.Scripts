@@ -67,7 +67,7 @@ New-ADOrganizationalUnit -Path $root_lab_ou -Name 'VDA' -Verbose
 
 # Create Group Specific OU's
 Write-Host "Create Group Specific OU's"
-$root_group_ou = "OU=Groups," + $root_lab_ou + "OU=" + $lab_name + "," + $root_ou
+$root_group_ou = "OU=Groups," + $root_lab_ou
 New-ADOrganizationalUnit -Path $root_group_ou -Name 'User' -Verbose
 New-ADOrganizationalUnit -Path $root_group_ou -Name 'Admin' -Verbose
 New-ADOrganizationalUnit -Path $root_group_ou -Name 'App' -Verbose
@@ -75,7 +75,7 @@ New-ADOrganizationalUnit -Path $root_group_ou -Name 'General' -Verbose
 
 # Create User Specific OU's
 Write-Host "Create User Specific OU's"
-$root_user_ou = "OU=Users," + $root_lab_ou + "OU=" + $lab_name + "," + $root_ou
+$root_user_ou = "OU=Users," + $root_lab_ou
 New-ADOrganizationalUnit -Path $root_user_ou -Name 'Service' -Verbose
 New-ADOrganizationalUnit -Path $root_user_ou -Name 'Standard' -Verbose
 New-ADOrganizationalUnit -Path $root_user_ou -Name 'Admin' -Verbose
@@ -83,20 +83,20 @@ New-ADOrganizationalUnit -Path $root_user_ou -Name 'External' -Verbose
 
 # Create Server Specific OU's
 Write-Host "Create Server Specific OU's"
-$root_server_ou = "OU=Servers," + $root_lab_ou + "OU=" + $lab_name + "," + $root_ou
+$root_server_ou = "OU=Servers," + $root_lab_ou
 New-ADOrganizationalUnit -Path $root_server_ou -Name 'Infrastructure' -Verbose
 New-ADOrganizationalUnit -Path $root_server_ou -Name 'General' -Verbose
-$root_infrastructure_ou = "OU=Infrastructure,OU=Servers," + $root_lab_ou + "OU=" + $lab_name + "," + $root_ou
+$root_infrastructure_ou = "OU=Infrastructure,OU=Servers," + $root_lab_ou 
 New-ADOrganizationalUnit -Path $root_infrastructure_ou -Name 'Microsoft' -Verbose
 New-ADOrganizationalUnit -Path $root_infrastructure_ou -Name 'Citrix' -Verbose
 New-ADOrganizationalUnit -Path $root_infrastructure_ou -Name 'VMware' -Verbose
 New-ADOrganizationalUnit -Path $root_infrastructure_ou -Name 'General' -Verbose
-$root_microsoft_ou = "OU=Microsoft,OU=Infrastructure,OU=Servers," + $root_lab_ou + "OU=" + $lab_name + "," + $root_ou
+$root_microsoft_ou = "OU=Microsoft,OU=Infrastructure,OU=Servers," + $root_lab_ou 
 New-ADOrganizationalUnit -Path $root_microsoft_ou -Name 'SQL' -Verbose
 New-ADOrganizationalUnit -Path $root_microsoft_ou -Name 'File' -Verbose
 New-ADOrganizationalUnit -Path $root_microsoft_ou -Name 'Print' -Verbose
 New-ADOrganizationalUnit -Path $root_microsoft_ou -Name 'ADFS' -Verbose
-$root_citrix_ou = "OU=Citrix,OU=Infrastructure,OU=Servers," + $root_lab_ou + "OU=" + $lab_name + "," + $root_ou
+$root_citrix_ou = "OU=Citrix,OU=Infrastructure,OU=Servers," + $root_lab_ou
 New-ADOrganizationalUnit -Path $root_citrix_ou -Name 'Licensing' -Verbose
 New-ADOrganizationalUnit -Path $root_citrix_ou -Name 'StoreFront' -Verbose
 New-ADOrganizationalUnit -Path $root_citrix_ou -Name 'WEM' -Verbose
@@ -108,25 +108,25 @@ New-ADOrganizationalUnit -Path $root_citrix_ou -Name 'Session Recording' -Verbos
 
 # Create Workstation Specific OU's
 Write-Host "Create Workstatiob Specific OU's"
-$root_workstation_ou = "OU=Workstaions," + $root_lab_ou + "OU=" + $lab_name + "," + $root_ou
+$root_workstation_ou = "OU=Workstaions," + $root_lab_ou 
 New-ADOrganizationalUnit -Path $root_workstation_ou -Name 'Windows 10' -Verbose
 New-ADOrganizationalUnit -Path $root_workstation_ou -Name 'Windows 7' -Verbose
 
 # Create VDA Specific OU's
 Write-Host "Create VDA SPecific OU's"
-$root_vda_ou = "OU=VDA," + $root_lab_ou + "OU=" + $lab_name + "," + $root_ou
+$root_vda_ou = "OU=VDA," + $root_lab_ou 
 New-ADOrganizationalUnit -Path $root_vda_ou -Name 'Citrix' -Verbose
 New-ADOrganizationalUnit -Path $root_vda_ou -Name 'VMware' -Verbose
-$root_citrix_vda_ou = "OU=Citrix,OU=VDA," + $root_lab_ou + "OU=" + $lab_name + "," + $root_ou
+$root_citrix_vda_ou = "OU=Citrix,OU=VDA," + $root_lab_ou 
 New-ADOrganizationalUnit -Path $root_citrix_vda_ou -Name 'PVS' -Verbose
 New-ADOrganizationalUnit -Path $root_citrix_vda_ou -Name 'MCS' -Verbose
 New-ADOrganizationalUnit -Path $root_citrix_vda_ou -Name 'Automated' -Verbose
-$root_citrix_vda_pvs_ou = "OU=PVS,OU=Citrix,OU=VDA," + $root_lab_ou + "OU=" + $lab_name + "," + $root_ou
+$root_citrix_vda_pvs_ou = "OU=PVS,OU=Citrix,OU=VDA," + $root_lab_ou 
 New-ADOrganizationalUnit -Path $root_citrix_vda_pvs_ou -Name 'Master' -Verbose
 New-ADOrganizationalUnit -Path $root_citrix_vda_pvs_ou -Name 'Windows 10' -Verbose
 New-ADOrganizationalUnit -Path $root_citrix_vda_pvs_ou -Name 'Server 2016' -Verbose
 New-ADOrganizationalUnit -Path $root_citrix_vda_pvs_ou -Name 'Server 2019' -Verbose
-$root_citrix_vda_mcs_ou = "OU=MCS,OU=Citrix,OU=VDA," + $root_lab_ou + "OU=" + $lab_name + "," + $root_ou
+$root_citrix_vda_mcs_ou = "OU=MCS,OU=Citrix,OU=VDA," + $root_lab_ou 
 New-ADOrganizationalUnit -Path $root_citrix_vda_mcs_ou -Name 'Master' -Verbose
 New-ADOrganizationalUnit -Path $root_citrix_vda_mcs_ou -Name 'Windows 10' -Verbose
 New-ADOrganizationalUnit -Path $root_citrix_vda_mcs_ou -Name 'Server 2016' -Verbose
