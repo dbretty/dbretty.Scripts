@@ -11,7 +11,7 @@ locals {
   powershell_command   = "${local.password_command}; ${local.install_ad_command}; ${local.configure_ad_command}; ${local.shutdown_command}; ${local.exit_code_hack}"
 }
 
-resource "null_resource" "domain_controller" {
+resource "null_resource" "configure_domain" {
   provisioner "remote-exec" {
     connection {
       type      = "winrm"
