@@ -20,7 +20,7 @@ resource "null_resource" "configure_ou_structure" {
     }
     inline = [
       "powershell -Command \"Invoke-WebRequest -Uri ${local.script_file} -OutFile ${local.out_file}\"",
-      "powershell -File ${local.out_file} -root_ou \"${var.root_ou}\" -lab_name \"${var.lab_name}\"",
+      "powershell -File ${local.out_file} -root_ou_name \"${var.root_ou}\" -lab_ou_name \"${var.lab_name}\"",
       "powershell -Command \"Remove-Item -Path ${local.out_file} -Force\"",
 
     ]

@@ -55,6 +55,8 @@ Param
 
 # Create Top Level OU and Build Root Lab OU
 Write-Host "Create Top Level Lab OU"
+Write-Host $root_ou_name
+Write-Host $lab_ou_name
 New-ADOrganizationalUnit -Path $root_ou_name -Name $lab_ou_name -Verbose
 $root_lab_ou = "OU=" + $lab_ou_name + "," + $root_ou_name
 
