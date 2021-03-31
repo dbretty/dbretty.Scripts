@@ -3,11 +3,11 @@
 #################################################################
 
 variable "dns_server" {
-  description = "The name of the Active Directory domain, for example `consoto.local`"
+  description = "The DNS Server to use for the Server DHCP Options"
 }
 
 variable "gateway" {
-  description = "The name of the Active Directory domain, for example `consoto.local`"
+  description = "The Gateway Server to use for the Server DHCP Options"
 }
 
 variable "admin_username" {
@@ -22,23 +22,22 @@ variable "host_name" {
   description = "The hostname for the virtual machine"
 }
 
-variable "ScopeName" {
-  description = "The hostname for the virtual machine"
+variable "scope_name" {
+  description = "The Name for the DHCP Scope"
 }
 
-variable "ScopeNetwork" {
-  description = "The hostname for the virtual machine"
+variable "scope_network" {
+  description = "The Overall Network for the DHCP Scope '192.168.10.0'"
 }
 
-variable "StartAddress" {
-  description = "The hostname for the virtual machine"
+variable "start_address" {
+  description = "The Start Address for the DHCP Scope '192.168.10.100'"
 }
 
-variable "EndAddress" {
-  description = "The hostname for the virtual machine"
+variable "end_address" {
+  description = "The End Address for the DHCP Scope '192.168.10.200'"
 }
 
-variable "SubnetMask" {
-  description = "The hostname for the virtual machine"
+variable "subnet_mask" {
+  description = "The Subnet Mask for the DHCP Scope '255.255.255.0'"
 }
-

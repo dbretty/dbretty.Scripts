@@ -20,7 +20,7 @@ resource "null_resource" "configure_dhcp_scope" {
     }
     inline = [
       "powershell -Command \"Invoke-WebRequest -Uri ${local.script_file} -OutFile ${local.out_file}\"",
-      "powershell -File ${local.out_file} -dns_server ${var.dns_server} -gateway ${var.gateway}",
+      "powershell -File ${local.out_file} -dns_server ${var.dns_server} -gateway ${var.gateway} -scope_name ${var.scope_name} -scope_network ${var.scope_network} -start_address ${var.start_address} -end_address ${var.end_address} -subnet_mask ${var.subnet_mask}",
       "powershell -Command \"Remove-Item -Path ${local.out_file} -Force\"",
     ]
   }

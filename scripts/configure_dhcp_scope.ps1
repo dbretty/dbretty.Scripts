@@ -60,67 +60,32 @@ Write-Host "Started Transcript"
 #----------------------------------------------------------[Parameters]------------------------------------------------------------
 Param
 (
-    [parameter(ValueFromPipeline = $true)]$dns_server,
-    [parameter(ValueFromPipeline = $true)]$gateway,
-    [parameter(ValueFromPipeline = $true)]$scope_name,
-    [parameter(ValueFromPipeline = $true)]$scope_network,
-    [parameter(ValueFromPipeline = $true)]$start_address,
-    [parameter(ValueFromPipeline = $true)]$end_address,
-    [parameter(ValueFromPipeline = $true)]$subnet_mask
+    [parameter(ValueFromPipeline = $true,Mandatory=$True,HelpMessage="Enter and IP for a DNS Server")]$dns_server,
+    [parameter(ValueFromPipeline = $true,Mandatory=$True,HelpMessage="Enter and IP for a Gateway")]$gateway,
+    [parameter(ValueFromPipeline = $true,Mandatory=$True,HelpMessage="Enter the Name for the DHCP Scope")]$scope_name,
+    [parameter(ValueFromPipeline = $true,Mandatory=$True,HelpMessage="Enter the Overall Scope Network, eg 192.168.10.0")]$scope_network,
+    [parameter(ValueFromPipeline = $true,Mandatory=$True,HelpMessage="Enter the Start Address, eg 192.168.10.100")]$start_address,
+    [parameter(ValueFromPipeline = $true,Mandatory=$True,HelpMessage="Enter the End Address, eg 192.168.10.200")]$end_address,
+    [parameter(ValueFromPipeline = $true,Mandatory=$True,HelpMessage="Enter the Subnet Mask, eg 255.255.255.0")]$subnet_mask
 )
 
 #-----------------------------------------------------------[Script]----------------------------------------------------------------
 
+# Import DHCP Management Snappin
+Write-Host "Import DHCP Server Snappin"
 Import-Module DHCPServer
+
+# Build FQDN
+Write-Host "Build FQDN"
 $DNSName = $ENV:computername + "." + $ENV:userdnsdomain
 
+# Add DHCP Scope
+Write-Host "Add DHCP Scope"
 Add-DHCPServerv4Scope -EndRange $EndAddress -Name $ScopeName -StartRange $StartAddress -SubnetMask $SubnetMask -State Active -ComputerName $ENV:computername
+
+# Assign DHCP Scope Options
+Write-Host "Assign DHCP Scope Options"
 Set-DHCPServerv4OptionValue -ComputerName $DNSName -ScopeId $ScopeNetwork -DnsServer $DNSServer -DnsDomain $ENV:userdnsdomain -Router $Gateway
-
-if($dns_server -eq ""){
-    Write-Host "You have to enter a DNS Server to continue"
-} else {
-    if($gateway -eq ""){
-        Write-Host "You have to enter a Gateway Server to continue"
-    } else {
-        Write-Host "Parameters verified, runnning DHCP Configuration"
-        # Check for the status of the DHCP Installation
-        $Status = Get-WindowsFeature -Name DHCP
-
-        if($Status.installed -eq $True){
-            # DHCP is already installed
-            Write-Host "DHCP Server is already installed"
-            $DHCPInstalled = $True
-        } else {
-            # DHCP is not installed, install it now
-            Write-Host "DHCP Server not installed, installing now"
-            $Result = Add-WindowsFeature -Name DHCP
-            if($result.success -eq $True){
-                Write-Host "DHCP Server installed"
-                $DHCPInstalled = $True
-            } else {
-                Write-Host "DHCP Server install failed"
-                $DHCPInstalled = $False
-            }
-        }
-        
-        # Validate DHCP was installed successfully
-        if($DHCPInstalled -eq $true){
-            # Import DHCP Management Snappin
-            Write-Host "Import DHCP Server Snappin"
-            Import-Module DHCPServer
-
-            Write-Host "Authorising DHCP Server in Domain"
-            Add-DhcpServerInDC -DnsName $DNSName -IPAddress $ServerIP.IPAddress
-
-            Write-Host "Setting DHCP Server options"
-            Set-DHCPServerv4OptionValue -ComputerName $DNSName -DnsServer $DNSServer -DnsDomain $ENV:userdnsdomain -Router $Gateway
-        } else {
-            Write-Host "There was a problem installing the DHCP server, please check the logs for more information"
-        }
-    }
-}
-
 
 #-----------------------------------------------------------[Clean]----------------------------------------------------------------
 # Stop Logging
