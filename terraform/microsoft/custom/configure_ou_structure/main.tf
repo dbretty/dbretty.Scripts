@@ -4,7 +4,7 @@
 
 locals { 
   script_file   = "https://raw.githubusercontent.com/dbretty/bretty.lab/master/scripts/configure_ou_structure.ps1"
-  out_file      = "C:/Windows/Temp/configure_dhcp.ps1"
+  out_file      = "C:/Windows/Temp/configure_ou_structure.ps1"
 }
 
 resource "null_resource" "configure_ou_structure" {
