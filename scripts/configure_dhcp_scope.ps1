@@ -81,11 +81,11 @@ $DNSName = $ENV:computername + "." + $ENV:userdnsdomain
 
 # Add DHCP Scope
 Write-Host "Add DHCP Scope"
-Add-DHCPServerv4Scope -EndRange $EndAddress -Name $ScopeName -StartRange $StartAddress -SubnetMask $SubnetMask -State Active -ComputerName $ENV:computername
+Add-DHCPServerv4Scope -EndRange $end_address -Name $scope_name -StartRange $start_address -SubnetMask $subnet_mask -State Active -ComputerName $ENV:computername
 
 # Assign DHCP Scope Options
 Write-Host "Assign DHCP Scope Options"
-Set-DHCPServerv4OptionValue -ComputerName $DNSName -ScopeId $ScopeNetwork -DnsServer $DNSServer -DnsDomain $ENV:userdnsdomain -Router $Gateway
+Set-DHCPServerv4OptionValue -ComputerName $DNSName -ScopeId $scope_network -DnsServer $DNSServer -DnsDomain $ENV:userdnsdomain -Router $gateway
 
 #-----------------------------------------------------------[Clean]----------------------------------------------------------------
 # Stop Logging
