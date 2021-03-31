@@ -19,14 +19,19 @@
   ./configure_ou_structure.ps1 -root_ou "DC=bretty,DC=lab" -lab_name "bretty"
 #>
 
+#----------------------------------------------------------[Parameters]------------------------------------------------------------
+
+Param
+(
+    [parameter(ValueFromPipeline = $true,Mandatory=$True,HelpMessage="Enter the root DC you want to use e.g DC=bretty,DC=lab")]$root_ou,
+    [parameter(ValueFromPipeline = $true,Mandatory=$True,HelpMessage="Enter the name for the lab")]$lab_name
+)
+
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
 
 # Set the start Date and Time
 Write-Host "Setting Script Parameters"
 $StartDTM = (Get-Date)
-
-# Set Error Action to Silently Continue
-$ErrorActionPreference = "SilentlyContinue"
 
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 
@@ -42,14 +47,6 @@ Write-Host "Setting Log File to $sLogFile"
 # Start the transcript for the script
 Start-Transcript $sLogFile
 Write-Host "Started Transcript"
-
-#----------------------------------------------------------[Parameters]------------------------------------------------------------
-
-Param
-(
-    [parameter(ValueFromPipeline = $true,Mandatory=$True)]$root_ou,
-    [parameter(ValueFromPipeline = $true,Mandatory=$True)]$lab_name
-)
 
 #-----------------------------------------------------------[Script]----------------------------------------------------------------
 
