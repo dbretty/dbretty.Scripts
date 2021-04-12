@@ -1,0 +1,17 @@
+%systemroot%\system32\inetsrv\AppCmd.exe set config "Default Web Site" /section:requestfiltering /fileExtensions.allowunlisted:false "/commit:apphost"
+%systemroot%\system32\inetsrv\AppCmd.exe set config "Default Web Site" /section:requestfiltering /verbs.allowunlisted:false "/commit:apphost"
+
+%systemroot%\system32\inetsrv\AppCmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering /fileExtensions.applyToWebDAV:"False"
+%systemroot%\system32\inetsrv\AppCmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering /+"fileExtensions.[fileExtension='.aspx',allowed='True']"
+%systemroot%\system32\inetsrv\AppCmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering /+"fileExtensions.[fileExtension='.css',allowed='True']"
+%systemroot%\system32\inetsrv\AppCmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering /+"fileExtensions.[fileExtension='.html',allowed='True']"
+%systemroot%\system32\inetsrv\AppCmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering /+"fileExtensions.[fileExtension='.js',allowed='True']"
+%systemroot%\system32\inetsrv\AppCmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering /+"fileExtensions.[fileExtension='.png',allowed='True']"
+%systemroot%\system32\inetsrv\AppCmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering /+"fileExtensions.[fileExtension='.svc',allowed='True']"
+%systemroot%\system32\inetsrv\appcmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering "/commit:apphost"
+
+%systemroot%\system32\inetsrv\appcmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering /verbs.applyToWebDAV:"False"
+%systemroot%\system32\inetsrv\appcmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering /+"verbs.[verb='GET',allowed='True']"
+%systemroot%\system32\inetsrv\appcmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering /+"verbs.[verb='POST',allowed='True']"
+%systemroot%\system32\inetsrv\appcmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering /+"verbs.[verb='HEAD',allowed='True']"
+%systemroot%\system32\inetsrv\appcmd.exe set config "Default Web Site" -section:system.webServer/security/requestFiltering "/commit:apphost"
