@@ -12,7 +12,7 @@
     Purpose/Change: Initial script development
   
 .EXAMPLE
-    ./rename_computer.ps1
+    ./Rename-Computer.ps1
 #>
 
 #----------------------------------------------------------[Parameters]------------------------------------------------------------
@@ -52,7 +52,7 @@ $ErrorActionPreference = "SilentlyContinue"
 
 # Log File Info
 $sLogPath = "C:\Windows\Temp"
-$sLogName = "rename_computer.log"
+$sLogName = "Rename-Computer.log"
 $sLogFile = Join-Path -Path $sLogPath -ChildPath $sLogName
 Write-Output "Setting Log File to $sLogFile"
 
