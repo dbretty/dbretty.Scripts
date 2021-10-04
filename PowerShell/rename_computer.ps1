@@ -63,9 +63,9 @@ Write-Output "Started Transcript"
 #-----------------------------------------------------------[Script]----------------------------------------------------------------
 
 # Rename Computer
-Write-Output "Setting Hostname to @@{SERVER_NAME}@@"
+Write-Output "Setting Hostname to $Hostname"
 
-Set-Hostname -Hostname "@@{SERVER_NAME}@@"
+Set-Hostname -Hostname $Hostname
 
 Restart-Computer -Force -AsJob
 
