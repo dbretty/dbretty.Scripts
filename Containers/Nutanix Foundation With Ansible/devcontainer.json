@@ -1,0 +1,32 @@
+// Details for the Docker Container that will be built
+{
+	"name": "bretty.me.uk",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			"VARIANT": "3.10-bullseye",
+			"ANSIBLE_VERSION": "latest"
+		}
+	},
+	"runArgs": [
+		"--init",
+		"--cap-add=SYS_ADMIN",
+		"--cap-add=DAC_READ_SEARCH"
+	],
+	
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"4ops.packer",
+				"richie5um2.vscode-statusbar-json-path",
+				"redhat.ansible",
+				"mutantdino.resourcemonitor"
+			]
+		}
+	},
+	
+	"remoteUser": "vscode"
+}
